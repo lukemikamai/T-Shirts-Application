@@ -1,0 +1,77 @@
+<?php
+
+/*
+ * invite-friends.php - allows the user to select friends for inviting.
+ *
+ */
+ 
+// SECURITY FIRST:  Check if this was called from a FB Canvas 
+// (Or at least that someone was good enough to forge the headers)
+if (!(isset($_POST['fb_sig_in_canvas']))) {
+	return;
+}
+elseif ($_POST['fb_sig_in_canvas'] != '1') {
+	return;
+}
+
+include_once './lib/constants.php';
+include_once CLIENT_PATH.'facebook.php';
+include_once LIB_PATH.'db.php';
+include_once LIB_PATH.'display.php';
+
+// Facebook setup.
+list($fb, $user) = getFaceBook(API_KEY, SECRET_KEY); 
+$fbml = '';
+
+// Create the user if it doesn't already exist.
+$fbml .= createUser($user, $fb);
+
+$app_url = "toddshirts";
+
+// Use FQL to find the list of users who have installed this app already and are
+// friends with this user
+$friends = $facebook->api_client->fql_query('SELECT uid FROM user
+WHERE has_added_app=1 and uid IN (SELECT uid2 FROM friend WHERE uid1 = '.$user.')');
+// Parse into a comma-separated list
+$excludeList = '';
+if($friends){
+	$excludeList .= $friends[0]['uid'];
+	for( $counter = 1; $counter < count($friends); $counter++ ){
+		if($excludeList != ''){
+		$excludeList .= ',';
+		}
+		$excludeList .= $friends[$counter]['uid'];
+	}
+}
+
+// Build your invite text
+$inviteContent = htmlentities('<fb:name uid="' . $user . '" firstnameonly
+="true" shownetwork="false"/> wants you earn discounted and free T-Shirts by sending T-Shirts to your friends!');
+	$inviteContent .= htmlentities('<fb:req-choice url="index.php"
+label="Send T-Shirts" />');
+
+
+$fbml = '';
+$fbml .= render_header();
+$user_summary = get_user_summary($user);
+$fbml .= render_user_summary($user_summary);
+?>
+
+<fb:request-form action="http://www.toddbiz.com/tshirts/post_invite.php"
+	invite="false"
+	type="Send T-Shirts"
+	content="<?php echo $inviteContent?>">
+	<fb:multi-friend-selector
+	actiontext="Here's a list of friends who don't send T-shirts yet:"
+	<?php if($excludeList != ''){?>exclude_ids="<?php echo $excludeList?>"<?php }?> rows="4"/>
+</fb:request-form>
+
+
+<?
+
+ echo render_footer();
+			
+?>
+
+
+

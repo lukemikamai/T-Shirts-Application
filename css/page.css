@@ -1,0 +1,221 @@
+#main_body {
+  padding : 10px;
+  padding-top : 0px;
+  font-family: "lucida grande",arial,tahoma,verdana,sans-serif;
+}
+
+.box {
+  padding: 10px;
+  width : 80px;
+  float : left;
+  text-align: center;
+  border: black 1px;
+  margin: 10px 10px;
+  cursor: pointer;
+  border: black solid 2px;
+  background: orange;
+  display: block;
+}
+
+.box_selected {
+  border: 2px dashed black;
+  background: #E1E1E1;
+}
+
+.box_selected .title {
+  visibility: visible;
+}
+
+.box_over .title {
+  visibility: visible;
+}
+
+.centeredImage
+    {
+    text-align:center;
+    margin-top:0px;
+    margin-bottom:0px;
+    padding:0px;
+    }
+
+img.shirt
+{
+height: 150px;
+width: 150px;
+}
+
+.table {
+   margin: 20px auto 20px auto;
+   overflow: hidden;
+   width: 755px;
+}
+
+
+.row {
+  width: 755px;
+  padding: 10px;
+  height : 225px;
+}
+
+.cell {
+  padding: 5px;
+  width : 150px;
+  height : 210px;
+  float : left;
+  text-align: center;
+  border: black 0px;
+  margin: 10px 10px;
+  cursor: pointer;
+  border: black solid 0px;
+  background: white;
+  display: block;
+}
+
+.cellDesc {
+  height : 35px;
+}
+
+.smiley {
+  font-size: 25pt;
+  font-weight: bold;
+  padding: 10px;
+}
+
+  a.box {
+   color: black;
+  }
+
+
+  a:hover.box {
+   text-decoration: none;
+  }
+
+
+h2 {
+ font-size: 20pt;
+ text-align: center;
+}
+
+h3 {
+ font-size: 12pt;
+ text-align: center;
+}
+
+#centerbutton {
+  margin-left: 42%;
+  margin-right: auto;
+}
+
+.buttons .publish_form_submit {
+ font-size: 13pt;
+ padding: 4px 15px 4px;
+}
+
+.buttons .interaction_form_submit {
+ font-size: 11pt;
+ padding: 4px 15px 4px;
+}
+
+.past {
+ margin-left:auto;
+ width: 550px;
+}
+
+.input_row {
+  text-align:center;
+  margin-left: 185px;
+  margin-top:  20px;
+}
+
+.section_button {
+  overflow: hidden;
+  padding: 20px;
+}
+  
+.fb_button {
+        background-color: #3b5998;
+        border-color: #d8dfea rgb(14, 31, 91) rgb(14, 31, 91) rgb(216, 223, 234);
+        border-style: solid;
+        border-width: 1px;
+        color: #fff;
+		font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+        font-size: 11px;
+        margin: 0 2px;
+        padding: 2px 16px;
+		width:	60px;
+}
+
+sup {
+	vertical-align: baseline;
+	font-size: 0.8em;
+	position: relative;
+	top: -0.4em;
+}
+
+
+
+/*  ------------------------|  FACEBOOK ADDITIONS  |------------------------  */
+
+/*  -------------------------------|  BARS  |-------------------------------  */
+
+
+.sort_bar {
+	padding: 2px 0px 0px;
+	margin: 10px 0px 0px 0px;
+}
+
+.sort_options {
+	float: left;	
+	width: 40%; 	
+  	font-weight: normal;
+}
+
+.sort_options a {
+  font-weight: normal; 
+}
+
+.sort_options .current a {
+  font-weight: bold; 
+}
+
+
+/* Changed bottom padding from 0px to 5px */  
+.footer_bar {
+	border-top:1px solid #CCCCCC;
+	padding:5px 20px;
+}
+
+/*  -----------------------------|  PAGER PRO  |----------------------------  */
+
+.pagerpro {
+  float: right;
+  list-style: none;
+  margin: 0;
+  padding: 0; }
+
+.pagerpro li {
+  display: inline;
+  float: left; }
+
+.pagerpro a {
+  display: block;
+  padding: 3px;
+  padding-bottom: 2px; }
+
+.pagerpro a:hover {
+  background: #3B5998;
+  border-color: #D8DFEA;
+  border-bottom: 1px solid #3B5998;
+  color: white;
+  text-decoration: none; }
+
+.pagerpro .current a,
+.pagerpro .current a:hover {
+  background: transparent;
+  border-color: #3B5998;
+  border-bottom: 2px solid #3B5998;
+  color: #3B5998;
+  font-weight: bold;
+  padding-left: 2px;
+  padding-right: 2px; }
+

@@ -1,0 +1,123 @@
+<?php
+/*
+ * index.php - (and For setting app boxes)
+ *
+ */
+
+// SECURITY FIRST:  Check if this was called from a FB Canvas 
+// (Or at least that someone was good enough to forge the headers)
+if (!(isset($_POST['fb_sig_in_canvas']))) {
+	echo "<p>You need to access this application from Facebook.</p>";
+	return;
+}
+elseif ($_POST['fb_sig_in_canvas'] != '1') {
+	echo "<p>You need to access this application from Facebook.</p>";
+ 	return;
+} 
+ 
+include_once './lib/constants.php';
+include_once LIB_PATH.'display.php';
+include_once LIB_PATH.'db.php';
+include_once CLIENT_PATH.'facebook.php';
+include_once LIB_PATH.'paginator_fb.php';
+
+// Facebook setup.
+list($fb, $user) = getFaceBook(API_KEY, SECRET_KEY); 
+$fbml = '';
+$userExists = createUser($user, $fb);
+
+// TODO: All of the parameter stuff can be removed? Since this is
+// handled by Ajax now?
+// Processing for initial page and navigating through
+// pages using the pagination links at the bottom of the page
+if (!(isset($_GET['page']))) {
+	$pagenum = 1;
+}
+else {
+	$pagenum = $_GET['page'];
+}
+ 
+
+// User just earned tbucks for sending some t-shirts?
+// TODO: Can this be removed?  I think this is now handled by
+// the ajax.
+if (isset($_GET['tbucks_for_send'])) {
+
+	$tbucks_earned = $_GET['tbucks_for_send'];
+
+	// Pop-up dialog showing how much the user earned for sending.
+	$fbml .= '<script>';
+	$fbml .= 'document.onload = showSendEarned();';
+	$fbml .= 'function showSendEarned() {';
+	$fbml .= 'var myDialog = new Dialog(Dialog.DIALOG_POP);';
+	$fbml .= 'title = \'T Bucks!\';';
+
+	if ($tbucks_earned > 0) {
+		$fbml .= 'content = \'Congratulations, you just earned '.$tbucks_earned.' tbucks for sending t-shirts.\';';	
+	}
+	
+	else {
+		$fbml .= 'content = \'Sorry you didn\\\'t earn any tbucks this time.  Try again later or try sending to different friends.\';';	
+	}
+	
+	$fbml .= 'myDialog.showMessage(title, content, button_confirm=\'OK\');';
+	$fbml .= 'return;';	
+	$fbml .= '}';
+	$fbml .= '</script>'; 
+}
+
+
+if (isset($_GET['tsort'])) {
+	$sort = $_GET['tsort'];
+} else {
+	$sort = 'AL';
+}
+
+if (isset($_GET['tsearch'])) {
+	$search = $_GET['tsearch'];
+	
+	// TO-DO: This should really be cleared during form submission (display.php)
+	// TO-DO: To be changed in freetshirts.php too!
+	if ($search == 'Search for T-shirts') {
+		$search = '';
+	}
+	
+} else {
+	$search = '';
+}
+
+if (isset($_GET['tcategory'])) {
+	$category = $_GET['tcategory'];
+} else {
+	$category = '';
+}
+
+ 
+?>
+
+<style>
+ <?php echo htmlentities(file_get_contents('css/page.css', true), ENT_NOQUOTES); ?>
+</style>
+
+<?php
+
+$rewriteid = 'main_page';
+$selectedTab = 'Send';
+$getShirts = 'get_shirts';
+$renderResultsPage = 'render_results_page';
+
+// If the user was just added then display the welcome page.
+
+//if ($userExists) {
+	$search_parms = compact('sort', 'search', 'category', 'user');
+	$fbml .= main_page($pagenum, $rewriteid, $selectedTab, $getShirts, 
+		$search_parms, $renderResultsPage, false, 'render_user_summary', $fb);	
+//}
+//else {	
+//	$fbml .= welcome_page($selectedTab);	
+//}
+
+echo $fbml;
+
+?>
+

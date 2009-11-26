@@ -1,0 +1,5 @@
+# Make sure the browser can't see this directory
+IndexIgnore *
+
+# order deny,allow
+# deny from all

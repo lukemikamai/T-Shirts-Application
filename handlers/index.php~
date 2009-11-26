@@ -1,0 +1,3 @@
+<?php
+	include_once(MAIN_PATH.'/default_index.php');
+?>

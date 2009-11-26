@@ -1,0 +1,61 @@
+<project name="tshirt" default="publish" basedir=".">
+	<description>
+    	simple example build file
+    </description>
+	<property name="src" location=""/>
+
+	<target name="init">
+    	<!-- Create the time stamp -->
+		<tstamp/>
+		<!-- Create the build directory structure used by compile -->
+	</target>
+
+	<target name="publish" 
+		description="Publish to the web">
+		<ftp server="toddbiz.com"
+			remotedir="/public_html/tshirts"
+			userid="toddbiz2"
+			password="Cmvjgut7"
+			passive="no"
+			depends="no"
+			verbose="yes"
+			timediffauto="no"
+			binary="yes">
+			<fileset dir="${src}">
+		   		<include name="**/*"/>
+				<modified/>
+			</fileset>
+		</ftp>		
+	</target>
+	
+	<target name="test" 
+		description="Publish to the test server">
+		<ftp server="toddbiz.com"
+			remotedir="/public_html/tshirtstest"
+			userid="toddbiz2"
+			password="Cmvjgut7"
+			passive="no"
+			depends="no"
+			verbose="yes"
+			timediffauto="no"
+			binary="yes">
+			<fileset dir="${src}">
+		   		<include name="**/*"/>
+		   		<modified/>
+			</fileset>
+		</ftp>		
+	</target>
+
+	<target name="clean" description="clean up" >
+    	<!-- Delete the ${build} and ${dist} directory trees -->
+		<delete dir="${build}"/>
+		<delete dir="${dist}"/>
+	</target>
+
+</project>
+
+
+
+
+
+
